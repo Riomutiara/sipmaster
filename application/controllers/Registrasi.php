@@ -305,9 +305,9 @@ class Registrasi extends CI_Controller
 				'role_id'		=> 5,
 				'username'		=> $this->input->post('nim'),
 				'password'		=> password_hash($password, PASSWORD_DEFAULT),
-				'institusi_id'		=> $this->input->post('nama_institusi'),
+				'institusi_id'	=> $this->input->post('nama_institusi'),
 				'nama_akun'		=> $this->input->post('nama_akun'),
-				'is_active'		=> 'Aktif',
+				'is_active'		=> $this->input->post('is_active'),
 				'image'			=> 'default.png',
 				'date_created'	=> time()
 			);
@@ -321,6 +321,7 @@ class Registrasi extends CI_Controller
 				'password'		=> password_hash($password, PASSWORD_DEFAULT),
 				'institusi_id'		=> $this->input->post('nama_institusi'),
 				'nama_akun'		=> $this->input->post('nama_akun'),
+				'is_active'		=> $this->input->post('is_active'),
 			);
 			$this->Registrasi_model->update_registrasi($this->input->post('user_id'), $update_data);
 			echo "Update Akun Mahasiswa berhasil";
