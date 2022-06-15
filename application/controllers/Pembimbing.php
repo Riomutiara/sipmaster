@@ -1,7 +1,8 @@
 <?php
 
-class Pembimbing extends CI_Controller{
-  public function __construct()
+class Pembimbing extends CI_Controller
+{
+	public function __construct()
 	{
 		parent::__construct();
 		is_logged_in();
@@ -12,21 +13,20 @@ class Pembimbing extends CI_Controller{
 	{
 		$data['title'] = 'Input Nilai Mahasiswa';
 		$data['user'] = $this->db->get_where('user', ['username' =>	$this->session->userdata('username')])->row_array();
-		$data['periode'] = $this->Nilai_model->fetch_periode();	
+		$data['periode'] = $this->Nilai_model->fetch_periode();
 		$this->load->view('templates/header', $data);
-	    $this->load->view('templates/sidebar', $data);
-	    $this->load->view('templates/topbar', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
 		$this->load->view('pembimbing/input_nilai', $data);
 		$this->load->view('templates/footer');
 	}
 
 	public function dataMahasiswa()
 	{
-    $fetch_data = $this->Nilai_model->make_datatables();
-		$data = array();	
+		$fetch_data = $this->Nilai_model->make_datatables();
+		$data = array();
 		$no = $_POST['start'];
-		foreach ($fetch_data as $row) 
-		{
+		foreach ($fetch_data as $row) {
 			$no++;
 			$sub_array = array();
 			$sub_array[] = $no;
@@ -34,9 +34,9 @@ class Pembimbing extends CI_Controller{
 			$sub_array[] = $row->mahasiswa_npm;
 			$sub_array[] = $row->mahasiswa_jenis_kelamin;
 			$sub_array[] = '
-				<a href="#" id="'.$row->mahasiswa_id.'" class="text-primary details mr-2" data-toggle="modal" title="Input Nilai"><i class="fas fa-edit"></i></a>				
+				<a href="#" id="' . $row->mahasiswa_id . '" class="text-primary details mr-2" data-toggle="modal" title="Input Nilai"><i class="fas fa-edit"></i></a>				
 				';
-			$data[] = $sub_array;					
+			$data[] = $sub_array;
 		}
 
 		$output = array(
@@ -46,15 +46,14 @@ class Pembimbing extends CI_Controller{
 			"data"				=> $data
 		);
 		echo json_encode($output);
-	 }
+	}
 
-	 public function tabelKirimMahasiswa()
+	public function tabelKirimMahasiswa()
 	{
-    	$fetch_data = $this->Nilai_model->make_datatables2();
-		$data = array();	
+		$fetch_data = $this->Nilai_model->make_datatables2();
+		$data = array();
 		$no = $_POST['start'];
-		foreach ($fetch_data as $row) 
-		{
+		foreach ($fetch_data as $row) {
 			$no++;
 			$sub_array = array();
 			$sub_array[] = $no;
@@ -64,35 +63,24 @@ class Pembimbing extends CI_Controller{
 			$sub_array[] = $row->nilai_angka;
 			$sub_array[] = $row->nilai_huruf;
 			$sub_array[] = $row->keterangan;
-			if ($row->status_nilai == 'draft') 
-			{
-				$sub_array[] = '<span class="badge badge-warning"><i>'.$row->status_nilai.'</i></span>';									
-			}
-			elseif ($row->status_nilai == 'selesai') 
-			{
-				$sub_array[] = '<span class="badge badge-success"><i>'.$row->status_nilai.'</i></span>';
-			}
-			elseif ($row->status_nilai == 'terkirim') 
-			{
-				$sub_array[] = '<span class="badge badge-primary"><i>'.$row->status_nilai.'</i></span>';
+			if ($row->status_nilai == 'draft') {
+				$sub_array[] = '<span class="badge badge-warning"><i>' . $row->status_nilai . '</i></span>';
+			} elseif ($row->status_nilai == 'selesai') {
+				$sub_array[] = '<span class="badge badge-success"><i>' . $row->status_nilai . '</i></span>';
+			} elseif ($row->status_nilai == 'terkirim') {
+				$sub_array[] = '<span class="badge badge-primary"><i>' . $row->status_nilai . '</i></span>';
 			}
 
-			if ($row->status_nilai == 'selesai') 
-			{
+			if ($row->status_nilai == 'selesai') {
 				$sub_array[] = '';
-			}
-			elseif ($row->status_nilai == 'terkirim') 
-			{
+			} elseif ($row->status_nilai == 'terkirim') {
 				$sub_array[] = '';
+			} else {
+				$sub_array[] =
+					'<a href="#" id="' . $row->mahasiswa_id . '" class="text-primary edit mr-2" data-toggle="modal" title="Edit Nilai"><i class="fas fa-edit"></i></a>
+				<a href="#" id="' . $row->mahasiswa_id . '" class="text-success kirim mr-2" data-toggle="modal" title="Kirim Nilai"><i class="fas fa-paper-plane"></i></a>';
 			}
-			else
-			{
-				$sub_array[] = 
-				'<a href="#" id="'.$row->mahasiswa_id.'" class="text-primary edit mr-2" data-toggle="modal" title="Edit Nilai"><i class="fas fa-edit"></i></a>
-				<a href="#" id="'.$row->mahasiswa_id.'" class="text-success kirim mr-2" data-toggle="modal" title="Kirim Nilai"><i class="fas fa-paper-plane"></i></a>'
-				;
-			}
-			$data[] = $sub_array;					
+			$data[] = $sub_array;
 		}
 
 		$output = array(
@@ -102,8 +90,8 @@ class Pembimbing extends CI_Controller{
 			"data"				=> $data
 		);
 		echo json_encode($output);
-	 }
-	 
+	}
+
 
 
 
@@ -111,22 +99,20 @@ class Pembimbing extends CI_Controller{
 	public function fetchSingleMahasiswa()
 	{
 		$output = array();
-			$data = $this->Nilai_model->fetch_single($_POST["mahasiswa_id"]);
-			foreach ($data as $row) 
-			{
+		$data = $this->Nilai_model->fetch_single($_POST["mahasiswa_id"]);
+		foreach ($data as $row) {
 			$output['nama_mahasiswa']		= $row->mahasiswa_nama;
 			$output['npm']  				= $row->mahasiswa_npm;
-			$output['jenis_kelamin']  		= $row->mahasiswa_jenis_kelamin;	            
-			}
-			echo json_encode($output);
+			$output['jenis_kelamin']  		= $row->mahasiswa_jenis_kelamin;
+		}
+		echo json_encode($output);
 	}
 
 	public function fetchSingleNilai()
 	{
 		$output = array();
 		$data = $this->Nilai_model->fetch_single_nilai($_POST["mahasiswa_id"]);
-		foreach ($data as $row) 
-		{
+		foreach ($data as $row) {
 			$output['nilai_angka']	= $row->nilai_angka;
 			$output['nilai_huruf']	= $row->nilai_huruf;
 			$output['keterangan']	= $row->keterangan;
@@ -136,17 +122,16 @@ class Pembimbing extends CI_Controller{
 
 	public function inputNilai()
 	{
-		if ($_POST['action'] == 'Kirim') 
-		{
+		if ($_POST['action'] == 'Kirim') {
 			$kirim_data = array(
-				'mahasiswa_id'		=> $this->input->post('mahasiswa_id'),	
-				'nilai_angka'		=> $this->input->post('nilai_angka'),	
+				'mahasiswa_id'		=> $this->input->post('mahasiswa_id'),
+				'nilai_angka'		=> $this->input->post('nilai_angka'),
 				'nilai_huruf'		=> $this->input->post('nilai_huruf'),
 				'keterangan'		=> $this->input->post('keterangan')
 			);
 
 			$update_data = array(
-				'status_nilai'		=> 'draft',	
+				'status_nilai'		=> 'draft',
 			);
 
 			$this->Nilai_model->insert_nilai($kirim_data);
@@ -154,10 +139,9 @@ class Pembimbing extends CI_Controller{
 			echo "Nilai berhasil disimpan";
 		}
 
-		if ($_POST['action'] == 'Edit_nilai') 
-		{
+		if ($_POST['action'] == 'Edit_nilai') {
 			$update_data = array(
-				'nilai_angka'		=> $this->input->post('nilai_angka'),	
+				'nilai_angka'		=> $this->input->post('nilai_angka'),
 				'nilai_huruf'		=> $this->input->post('nilai_huruf'),
 				'keterangan'		=> $this->input->post('keterangan')
 			);
@@ -169,7 +153,7 @@ class Pembimbing extends CI_Controller{
 	public function kirimNilai()
 	{
 		$update_data = array(
-			'status_nilai'		=> 'selesai',	
+			'status_nilai'		=> 'selesai',
 		);
 		$this->Nilai_model->kirim_nilai($_POST['id'], $update_data);
 		echo "Nilai berhasil dikirim";
@@ -186,13 +170,59 @@ class Pembimbing extends CI_Controller{
 	{
 		$data['title'] = 'Kirim Nilai Mahasiswa';
 		$data['user'] = $this->db->get_where('user', ['username' =>	$this->session->userdata('username')])->row_array();
-		$data['periode'] = $this->Nilai_model->fetch_periode();	
-				
+		$data['periode'] = $this->Nilai_model->fetch_periode();
+
 		$this->load->view('templates/header', $data);
-	    $this->load->view('templates/sidebar', $data);
-	    $this->load->view('templates/topbar', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
 		$this->load->view('pembimbing/kirim_nilai', $data);
 		$this->load->view('templates/footer');
 	}
-  // END PEMBIMBING
+
+
+
+
+
+
+
+
+	public function tugasmahasiswa()
+	{
+		$data['title'] = 'Tugas Mahasiswa';
+		$data['user'] = $this->db->get_where('user', ['username' =>	$this->session->userdata('username')])->row_array();
+
+		$this->load->view('templates/header', $data);
+		$this->load->view('templates/sidebar', $data);
+		$this->load->view('templates/topbar', $data);
+		$this->load->view('pembimbing/tugas_mahasiswa', $data);
+		$this->load->view('templates/footer');
+	}
+
+	public function tabelTugasMahasiswa()
+	{
+		$fetch_data = $this->Nilai_model->make_datatables_tugas();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($fetch_data as $row) {
+			$no++;
+			$sub_array = array();
+			$sub_array[] = $no;
+			$sub_array[] = $row->judul_tugas;
+			$sub_array[] = $row->judul_tugas;
+			$sub_array[] = $row->judul_tugas;
+			$sub_array[] = $row->judul_tugas;
+			$sub_array[] = $row->judul_tugas;
+			$sub_array[] = $row->judul_tugas;
+			$data[] = $sub_array;
+		}
+
+		$output = array(
+			"draw"				=> intval($_POST['draw']),
+			"recordsTotal"		=> $this->Nilai_model->get_all_tugas(),
+			"recordsFiltered"	=> $this->Nilai_model->get_filtered_tugas(),
+			"data"				=> $data
+		);
+		echo json_encode($output);
+	}
+	// END PEMBIMBING
 }

@@ -100,7 +100,7 @@
 		      	<div class="modal-footer">
 		      		<input type="hidden" name="jadwal_id" id="jadwal_id">
 		      		<input type="hidden" name="action" id="action">
-		      		<input type="text" name="dokumen" id="dokumen">
+		      		<input type="hidden" name="dokumen" id="dokumen">
 					<button type="submit" name="btn_action" id="btn_action" class="btn btn-success"><i class="fas fa-paper-plane mr-2"></i>Kirim Jadwal</button>
 					<button type="button" class="btn btn-secondary" action="javascript:document.location.reload()" data-dismiss="modal" id="batal">Tutup</button>
 		      	</div>	
@@ -167,6 +167,7 @@
   			// 	Detail data
 			$(document).on('click', '.details', function(){			
 				var jadwal_id = $(this).attr('id');
+				console.log(jadwal_id);
 				$.ajax({
 					url: '<?php echo base_url(); ?>institusi/fetchSingleJadwal',
 					method: 'POST',

@@ -724,7 +724,7 @@ CREATE TABLE `v_jadwalinstitusi` (
 --
 DROP TABLE IF EXISTS `tabel_mahasiswa`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER VIEW `tabel_mahasiswa`  AS SELECT `jadwal`.`jadwal_id` AS `jadwal_id`, `jadwal`.`jadwal_nama` AS `jadwal_nama`, `jadwal`.`jadwal_mulai` AS `jadwal_mulai`, `jadwal`.`jadwal_akhir` AS `jadwal_akhir`, `jadwal`.`jadwal_status` AS `jadwal_status`, `jadwal`.`username` AS `username`, `jadwal`.`volume` AS `volume`, `jadwal`.`file` AS `file`, `jadwal`.`type` AS `type`, `jadwal`.`size` AS `size`, `mahasiswa`.`jadwal_id` AS `mahasiswa_jadwal_id`, `mahasiswa`.`mahasiswa_nama` AS `mahasiswa_nama`, `mahasiswa`.`mahasiswa_npm` AS `mahasiswa_npm`, `mahasiswa`.`mahasiswa_jenis_kelamin` AS `mahasiswa_jenis_kelamin`, `mahasiswa`.`mahasiswa_jenis_praktek` AS `mahasiswa_jenis_praktek` FROM (`jadwal` join `mahasiswa` on(`jadwal`.`jadwal_id` = `mahasiswa`.`jadwal_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `tabel_mahasiswa`  AS SELECT `jadwal`.`jadwal_id` AS `jadwal_id`, `jadwal`.`jadwal_nama` AS `jadwal_nama`, `jadwal`.`jadwal_mulai` AS `jadwal_mulai`, `jadwal`.`jadwal_akhir` AS `jadwal_akhir`, `jadwal`.`jadwal_status` AS `jadwal_status`, `jadwal`.`username` AS `username`, `jadwal`.`volume` AS `volume`, `jadwal`.`file` AS `file`, `jadwal`.`type` AS `type`, `jadwal`.`size` AS `size`, `mahasiswa`.`jadwal_id` AS `mahasiswa_jadwal_id`, `mahasiswa`.`mahasiswa_nama` AS `mahasiswa_nama`, `mahasiswa`.`mahasiswa_npm` AS `mahasiswa_npm`, `mahasiswa`.`mahasiswa_jenis_kelamin` AS `mahasiswa_jenis_kelamin`, `mahasiswa`.`mahasiswa_jenis_praktek` AS `mahasiswa_jenis_praktek` FROM (`jadwal` join `mahasiswa` on(`jadwal`.`jadwal_id` = `mahasiswa`.`jadwal_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -733,7 +733,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER V
 --
 DROP TABLE IF EXISTS `tabel_mahasiswa2`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER VIEW `tabel_mahasiswa2`  AS SELECT `jadwal`.`jadwal_id` AS `jadwal_id`, `jadwal`.`jadwal_nama` AS `jadwal_nama`, `jadwal`.`jadwal_mulai` AS `jadwal_mulai`, `jadwal`.`jadwal_akhir` AS `jadwal_akhir`, `jadwal`.`jadwal_status` AS `jadwal_status`, `jadwal`.`username` AS `username`, `mahasiswa`.`jadwal_id` AS `mahasiswa_jadwal_id`, `mahasiswa`.`mahasiswa_nama` AS `mahasiswa_nama`, `mahasiswa`.`mahasiswa_npm` AS `mahasiswa_npm`, `mahasiswa`.`mahasiswa_jenis_kelamin` AS `mahasiswa_jenis_kelamin`, `mahasiswa`.`mahasiswa_jenis_praktek` AS `mahasiswa_jenis_praktek` FROM (`jadwal` join `mahasiswa` on(`jadwal`.`jadwal_id` = `mahasiswa`.`jadwal_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `tabel_mahasiswa2`  AS SELECT `jadwal`.`jadwal_id` AS `jadwal_id`, `jadwal`.`jadwal_nama` AS `jadwal_nama`, `jadwal`.`jadwal_mulai` AS `jadwal_mulai`, `jadwal`.`jadwal_akhir` AS `jadwal_akhir`, `jadwal`.`jadwal_status` AS `jadwal_status`, `jadwal`.`username` AS `username`, `mahasiswa`.`jadwal_id` AS `mahasiswa_jadwal_id`, `mahasiswa`.`mahasiswa_nama` AS `mahasiswa_nama`, `mahasiswa`.`mahasiswa_npm` AS `mahasiswa_npm`, `mahasiswa`.`mahasiswa_jenis_kelamin` AS `mahasiswa_jenis_kelamin`, `mahasiswa`.`mahasiswa_jenis_praktek` AS `mahasiswa_jenis_praktek` FROM (`jadwal` join `mahasiswa` on(`jadwal`.`jadwal_id` = `mahasiswa`.`jadwal_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -742,7 +742,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER V
 --
 DROP TABLE IF EXISTS `v_jadwal`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER VIEW `v_jadwal`  AS SELECT `mahasiswa`.`mahasiswa_id` AS `mahasiswa_id`, `mahasiswa`.`jadwal_id` AS `jadwal_id`, `mahasiswa`.`jurusan_id` AS `jurusan_id`, `mahasiswa`.`mahasiswa_nama` AS `mahasiswa_nama`, `mahasiswa`.`mahasiswa_npm` AS `mahasiswa_npm`, `mahasiswa`.`mahasiswa_jenis_kelamin` AS `mahasiswa_jenis_kelamin`, `mahasiswa`.`mahasiswa_jenis_praktek` AS `mahasiswa_jenis_praktek`, `jadwal`.`jadwal_nama` AS `jadwal_nama`, `jadwal`.`file` AS `file`, `jadwal`.`type` AS `type`, `jurusan`.`jurusan_nama` AS `jurusan_nama` FROM ((`mahasiswa` join `jadwal` on(`mahasiswa`.`jadwal_id` = `jadwal`.`jadwal_id`)) join `jurusan` on(`jurusan`.`jurusan_id` = `mahasiswa`.`jurusan_id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_jadwal`  AS SELECT `mahasiswa`.`mahasiswa_id` AS `mahasiswa_id`, `mahasiswa`.`jadwal_id` AS `jadwal_id`, `mahasiswa`.`jurusan_id` AS `jurusan_id`, `mahasiswa`.`mahasiswa_nama` AS `mahasiswa_nama`, `mahasiswa`.`mahasiswa_npm` AS `mahasiswa_npm`, `mahasiswa`.`mahasiswa_jenis_kelamin` AS `mahasiswa_jenis_kelamin`, `mahasiswa`.`mahasiswa_jenis_praktek` AS `mahasiswa_jenis_praktek`, `jadwal`.`jadwal_nama` AS `jadwal_nama`, `jadwal`.`file` AS `file`, `jadwal`.`type` AS `type`, `jurusan`.`jurusan_nama` AS `jurusan_nama` FROM ((`mahasiswa` join `jadwal` on(`mahasiswa`.`jadwal_id` = `jadwal`.`jadwal_id`)) join `jurusan` on(`jurusan`.`jurusan_id` = `mahasiswa`.`jurusan_id`)) ;
 
 -- --------------------------------------------------------
 
@@ -751,7 +751,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER V
 --
 DROP TABLE IF EXISTS `v_jadwalinstitusi`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`rsjhbsaa`@`localhost` SQL SECURITY DEFINER VIEW `v_jadwalinstitusi`  AS SELECT `institusi`.`institusi_nama` AS `institusi_nama`, `user`.`institusi_id` AS `institusi_id`, `jadwal`.`username` AS `username` FROM ((`user` join `institusi` on(`user`.`institusi_id` = `institusi`.`institusi_id`)) join `jadwal` on(`user`.`username` = `jadwal`.`username`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_jadwalinstitusi`  AS SELECT `institusi`.`institusi_nama` AS `institusi_nama`, `user`.`institusi_id` AS `institusi_id`, `jadwal`.`username` AS `username` FROM ((`user` join `institusi` on(`user`.`institusi_id` = `institusi`.`institusi_id`)) join `jadwal` on(`user`.`username` = `jadwal`.`username`)) ;
 
 --
 -- Indexes for dumped tables
