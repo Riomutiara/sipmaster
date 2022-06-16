@@ -20,7 +20,13 @@ class MahasiswaTugas_model extends CI_Model
       $this->db->where('user', $this->input->post('Username'));
     }
 
-    $this->db->select('*');
+    $this->db->select('
+          upload_tugas.id,
+          upload_tugas.judul_tugas,
+          upload_tugas.file,
+          upload_tugas.status,
+          pembimbing.pembimbing_nama,
+    ');
     $this->db->from('upload_tugas');
     $this->db->join('pembimbing', 'pembimbing.pembimbing_id = upload_tugas.id_pembimbing');
 
@@ -28,11 +34,7 @@ class MahasiswaTugas_model extends CI_Model
       $this->db->like('judul_tugas', $_POST['search']['value']);
     }
 
-    // if (isset($_POST['order'])) {
-    //   $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-    // } else {
-      $this->db->order_by('id', 'DESC');
-    // }
+    $this->db->order_by('id', 'DESC');
   }
 
   public function make_datatables()

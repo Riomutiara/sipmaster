@@ -1,4 +1,4 @@
-		<input type="text" name="id_user" id="id_user" value="<?= $user['institusi_id']; ?>">
+		<input type="hidden" name="id_user" id="id_user" value="<?= $user['institusi_id']; ?>">
 		<div class="container-fluid my-5">
 			<div class="row-lg-md-sm-12">
 				<div class="col-lg-md-sm-12">
@@ -10,9 +10,8 @@
 									<thead class="thead-light">
 										<tr>
 											<th>No.</th>
-											<th>Nama Mahasiswa</th>
-											<th>Institusi</th>
 											<th>Judul</th>
+											<th>Nama Mahasiswa</th>
 											<th>File</th>
 											<th>Action</th>
 										</tr>
@@ -32,57 +31,8 @@
 		<!-- End container -->
 		</div>
 
-
-		<!-- Modal show details -->
-
-		<!-- End modal details -->
-
 		<script>
 			$(document).ready(function() {
-
-				// Input Desimal
-				// $(document).on('keydown', 'input[pattern]', function(e) {
-				// 	var input = $(this);
-				// 	var oldVal = input.val();
-				// 	var regex = new RegExp(input.attr('pattern'), 'g');
-
-				// 	setTimeout(function() {
-				// 		var newVal = input.val();
-				// 		if (!regex.test(newVal)) {
-				// 			input.val(oldVal);
-				// 		}
-				// 	}, 0);
-				// });
-
-				// $(document).on('change', '#id_periode', function() {
-				// 	dataTable.ajax.reload();
-				// });
-
-
-
-				// Nilai huruf otomatis
-				// $(document).on('change', '#nilai_angka', function(){
-				// 	var angka = $('#nilai_angka').val();
-
-				// 	if(angka >= 80)
-				// 	{
-				// 		$('#nilai_huruf').val('A');
-				// 	}
-				// 	if(angka < 80 && angka >= 70)
-				// 	{
-				// 		$('#nilai_huruf').val('B');
-				// 	}
-				// 	if(angka < 70)
-				// 	{
-				// 		$('#nilai_huruf').val('C');
-				// 	}
-				// 	if(angka == 0)
-				// 	{
-				// 		$('#nilai_huruf').val('');
-				// 	}		
-				// });
-
-
 				// Datatables mahasiswa
 				dataTable = $('#tabel_tugas_mahasiswa').DataTable({
 					"info": false,
@@ -248,6 +198,24 @@
 					}
 				});
 				// End edit nilai mahasiswa
+
+
+				// End approve jadwal
+				$(document).on('click', '.lihat_nilai', function() {
+					var id = $(this).attr('id');
+					var filepdf = $(this).attr('file');
+					console.log([id, filepdf]);
+					$.ajax({
+						url: '<?php echo base_url(); ?>pembimbing/updateStatusTugas',
+						method: 'POST',
+						data: {
+							id: id
+						},
+						success: function(data) {
+							window.open('<?php echo base_url('assets/documents/tugasmahasiswa/') ?>' + filepdf)
+						}
+					});
+				});
 			});
 			// End document ready
 		</script>

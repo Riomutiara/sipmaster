@@ -132,8 +132,17 @@ class Nilai_model extends CI_Model
 			$this->db->where('upload_tugas.id_pembimbing', $this->input->post('Pembimbing'));
 		}
 
-		$this->db->select('*');
+		$this->db->select('
+				user.nama_akun,
+				institusi.institusi_nama,
+				upload_tugas.judul_tugas,
+				upload_tugas.file,
+				upload_tugas.id,
+		
+		');
 		$this->db->from('upload_tugas');
+		$this->db->join('user', 'user.username = upload_tugas.user', 'LEFT');
+		$this->db->join('institusi', 'institusi.institusi_id = user.institusi_id', 'LEFT');
 
 		// if (isset($_POST['search']['value'])) {
 		// 	// $this->db->like('mahasiswa_nama', $_POST['search']['value']);
@@ -142,7 +151,7 @@ class Nilai_model extends CI_Model
 		if (isset($_POST['order'])) {
 			$this->db->order_by($this->order_column2[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
 		} else {
-			$this->db->order_by('id', 'DESC');
+			$this->db->order_by('upload_tugas.id', 'DESC');
 		}
 	}
 
@@ -220,5 +229,11 @@ class Nilai_model extends CI_Model
 	{
 		$this->db->where('mahasiswa_id', $mahasiswa_id);
 		$this->db->update('kelompok', $update_data);
+	}
+
+	public function update_status_tugas($id, $data)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('upload_tugas', $data);
 	}
 }

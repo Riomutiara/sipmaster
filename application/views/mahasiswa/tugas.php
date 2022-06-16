@@ -45,8 +45,6 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<!-- <input type="hidden" name="jadwal_id" id="jadwal_id">
-							<input type="hidden" name="btn_action" id="btn_action"> -->
 							<input type="submit" name="action" id="action" class="btn btn-info" value="Simpan">
 						</div>
 					</form>
@@ -61,7 +59,7 @@
 									<th>Judul</th>
 									<th>Pembimbing</th>
 									<th>File</th>
-									<th></th>
+									<th>Status</th>
 								</tr>
 							</thead>
 						</table>
@@ -77,17 +75,6 @@
 			var dataTable;
 
 			$(document).ready(function() {
-				// var id_jadwal = $('#jadwal').val();
-				// $('#id_jadwal').val(id_jadwal);
-
-				// $(document).on('change', '#jadwal', function() {
-				// 	var id_jadwal = $('#jadwal').val();
-
-				// 	$('#id_jadwal').val(id_jadwal);
-				// 	dataTable.ajax.reload();
-
-				// });
-
 				// Datatables
 				dataTable = $('#tabel_tugas_mahasiswa').DataTable({
 					"info": false,
@@ -143,7 +130,7 @@
 						judul = $('#judul').val();
 					}
 
-					if (error_pembimbing != '' || error_judul != '' ) {
+					if (error_pembimbing != '' || error_judul != '') {
 						Swal.fire({
 							icon: 'error',
 							title: 'Data belum lengkap!',
@@ -177,7 +164,6 @@
 				// Delete data
 				$(document).on('click', '.hapus_tugas', function() {
 					var id = $(this).attr('id');
-
 					Swal.fire({
 						title: 'Apakah Kamu Yakin?',
 						text: "Hapus data ini?",
@@ -197,13 +183,23 @@
 									id
 								},
 								success: function(data) {
-									Swal.fire({
-										icon: 'success',
-										title: data,
-										showConfirmButton: false,
-										timer: 1500
-									})
-									dataTable.ajax.reload();
+									if (data == 1) {
+										Swal.fire({
+											icon: 'error',
+											title: 'Gagal hapus, file sudah diterima oleh Pembimbing',
+											showConfirmButton: false,
+											timer: 1500
+										})
+										dataTable.ajax.reload();
+									} else {
+										Swal.fire({
+											icon: 'success',
+											title: 'Data berhasil dihapus',
+											showConfirmButton: false,
+											timer: 1500
+										})
+										dataTable.ajax.reload();
+									}
 								}
 							});
 						}

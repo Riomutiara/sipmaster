@@ -45,7 +45,7 @@ class Mahasiswa extends CI_Controller
 			'id_pembimbing'	=> $this->input->post("pembimbing"),
 			'judul_tugas' 	=> $this->input->post("judul"),
 			'catatan'		=> $this->input->post("catatan"),
-			'user'			=> $this->input->post("username"),
+			'user'			=> $this->input->post("id_user"),
 			'status'		=> 1,
 			'file'			=> $this->upload->data("file_name"),
 			'type'			=> $this->upload->data('file_ext'),
@@ -60,19 +60,22 @@ class Mahasiswa extends CI_Controller
 	public function tabelTugas()
 	{
 		$fetch_data = $this->MahasiswaTugas_model->make_datatables();
-		$data = array();	
+		$data = array();
 		$no = $_POST['start'];
-		foreach ($fetch_data as $row) 
-		{
+		foreach ($fetch_data as $row) {
 			$no++;
 			$sub_array = array();
 			$sub_array[] = $no;
 			$sub_array[] = $row->judul_tugas;
 			$sub_array[] = $row->pembimbing_nama;
 			$sub_array[] = $row->file;
-			$sub_array[] = '<a href="#" id="'.$row->id.'" class="text-danger hapus_tugas mr-2" data-toggle="modal" title="Hapus Tugas"><i class="fas fa-trash"></i></a>';
-			
-			$data[] = $sub_array;					
+			if ($row->status == 1) {
+				$sub_array[] = '<a href="#" id="' . $row->id . '" class="text-danger hapus_tugas mr-2" data-toggle="modal" title="Hapus Tugas"><i class="fas fa-trash"></i></a>';
+			} else {
+				$sub_array[] = '<span class="badge badge-success">diterima pembimbing</span>';
+			}
+
+			$data[] = $sub_array;
 		}
 
 		$output = array(
@@ -83,7 +86,12 @@ class Mahasiswa extends CI_Controller
 
 	public function hapusTugas()
 	{
-		$this->MahasiswaTugas_model->hapus_tugas($_POST['id']);
-		echo 'Data berhasil dihapus';
+		$cek_status_tugas = $this->db->get_where('upload_tugas', ['id' => $_POST['id'], 'status' => 2])->row_array();
+		if ($cek_status_tugas) {
+			echo '1';
+		} else {
+			$this->MahasiswaTugas_model->hapus_tugas($_POST['id']);
+			echo '2';
+		}
 	}
 }

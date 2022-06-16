@@ -281,7 +281,7 @@
 				var id = $(this).attr('id');
 				// var filepdf = $('#file').val();
 				
-						window.open ('<?php echo base_url('assets/documents/suratpengantar/') ?>'+id)
+						window.open ('<?php echo base_url('assets/documents/nilaimahasiswa/') ?>'+id)
 				
 				
 			});

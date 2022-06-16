@@ -208,11 +208,9 @@ class Pembimbing extends CI_Controller
 			$sub_array = array();
 			$sub_array[] = $no;
 			$sub_array[] = $row->judul_tugas;
-			$sub_array[] = $row->judul_tugas;
-			$sub_array[] = $row->judul_tugas;
-			$sub_array[] = $row->judul_tugas;
-			$sub_array[] = $row->judul_tugas;
-			$sub_array[] = $row->judul_tugas;
+			$sub_array[] = '<div>'.$row->nama_akun.'<br>'.$row->institusi_nama.'</div>';
+			$sub_array[] = $row->file;
+			$sub_array[] = '<a href="#" class="btn btn-sm btn-primary lihat_nilai" id="' . $row->id . '" file="'.$row->file.'" data-toggle="modal"><i class="fas fa-search mr-1"></i>Lihat</a>';
 			$data[] = $sub_array;
 		}
 
@@ -223,6 +221,14 @@ class Pembimbing extends CI_Controller
 			"data"				=> $data
 		);
 		echo json_encode($output);
+	}
+
+	public function updateStatusTugas()
+	{
+		$status = [
+			'status' => 2
+		];
+		$this->Nilai_model->update_status_tugas($_POST['id'], $status);		
 	}
 	// END PEMBIMBING
 }
