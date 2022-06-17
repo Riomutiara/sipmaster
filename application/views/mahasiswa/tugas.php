@@ -86,7 +86,7 @@
 						"url": "<?php echo base_url(); ?>mahasiswa/tabelTugas",
 						"type": "POST",
 						"data": function(data) {
-							data.Username = $('#username').val();
+							data.Username = $('#id_user').val();
 						}
 					},
 					"columnDefs": [{

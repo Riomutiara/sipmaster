@@ -144,9 +144,9 @@ class Nilai_model extends CI_Model
 		$this->db->join('user', 'user.username = upload_tugas.user', 'LEFT');
 		$this->db->join('institusi', 'institusi.institusi_id = user.institusi_id', 'LEFT');
 
-		// if (isset($_POST['search']['value'])) {
-		// 	// $this->db->like('mahasiswa_nama', $_POST['search']['value']);
-		// }
+		if (isset($_POST['search']['value'])) {
+			$this->db->like('user.nama_akun', $_POST['search']['value']);
+		}
 
 		if (isset($_POST['order'])) {
 			$this->db->order_by($this->order_column2[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);

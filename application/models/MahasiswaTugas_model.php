@@ -14,10 +14,23 @@ class MahasiswaTugas_model extends CI_Model
     $this->db->delete('upload_tugas');
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
   public function make_query()
   {
     if ($this->input->post('Username')) {
-      $this->db->where('user', $this->input->post('Username'));
+      $this->db->where('upload_tugas.user', $this->input->post('Username'));
     }
 
     $this->db->select('
@@ -28,7 +41,7 @@ class MahasiswaTugas_model extends CI_Model
           pembimbing.pembimbing_nama,
     ');
     $this->db->from('upload_tugas');
-    $this->db->join('pembimbing', 'pembimbing.pembimbing_id = upload_tugas.id_pembimbing');
+    $this->db->join('pembimbing', 'pembimbing.pembimbing_id = upload_tugas.id_pembimbing', 'LEFT');
 
     if (($_POST['search']['value'])) {
       $this->db->like('judul_tugas', $_POST['search']['value']);
